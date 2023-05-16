@@ -55,7 +55,6 @@ app.post('/editList/:userId', (req, res) => {
     res.render();
 });
 
-
 app.get('/delete:userId', (req, res) => {
     let primary_data = fs.readFileSync('users.json');
     let users = JSON.parse(primary_data);
