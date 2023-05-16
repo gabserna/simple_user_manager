@@ -40,20 +40,26 @@ app.post('/createUser', (req, res) => {
 
 app.get('/userList', (req, res) => {
     let primary_data = fs.readFileSync('users.json');
+    let users = JSON.parse(primary_data);
+    res.render();
 });
 
 app.get('/editList/:userId', (req, res) => {
     let primary_data = fs.readFileSync('users.json');
-    
+    let users = JSON.parse(primary_data);
+    res.render();
 });
 app.post('/editList/:userId', (req, res) => {
     let primary_data = fs.readFileSync('users.json');
-
+    let users = JSON.parse(primary_data);
+    res.render();
 });
 
 
 app.get('/delete:userId', (req, res) => {
     let primary_data = fs.readFileSync('users.json');
+    let users = JSON.parse(primary_data);
+    res.render();
 });
 
 //initialize the server    --change to PORT????--
