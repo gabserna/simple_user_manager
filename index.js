@@ -3,6 +3,7 @@ const fs = require('fs');
 const app = express();
 const uuidd = require('uuidd');
 
+
 // this are the middlewares
 app.use(express.static('public'));  //static page
 app.use(express.urlencoded({ extended: true }));
@@ -11,33 +12,48 @@ app.set('views', './views');
 
 // get data to json file
 let primary_data = fs.readFileSync('users.json');
-let users = json.parse(primary_data);
+let users = JSON.parse(primary_data);
 
 // routes
 app.get('/newUser', (req, res) => {
     res.render('newUser', { user: {} });
 });
+
 app.get('/', (req, res) => {
-    res.redirect('userList');
+    res.redirect('/userList');
 });
 
-// what will happend when user clicks the input button ???????
+// what will goint to happend when user clicks the input button ???????
 app.post('/createUser', (req, res) => {
-
-})
+    const user = {
+        userId: uuidd.v4(),
+        username: req.body.username,
+        name: req.body.name,
+        email: req.body.email,
+        age: req.body.age,
+    };
+    users.users.push();
+    let data = JSON.stringify(users);
+    fs.writeFileSync('users.json', data);
+    res.redirect('/userList');
+});
 
 app.get('/userList', (req, res) => {
+    let primary_data = fs.readFileSync('users.json');
 });
 
 app.get('/editList/:userId', (req, res) => {
+    let primary_data = fs.readFileSync('users.json');
     
 });
 app.post('/editList/:userId', (req, res) => {
+    let primary_data = fs.readFileSync('users.json');
 
 });
 
 
 app.get('/delete:userId', (req, res) => {
+    let primary_data = fs.readFileSync('users.json');
 });
 
 //initialize the server    --change to PORT????--
