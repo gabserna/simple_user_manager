@@ -3,7 +3,7 @@
     "nodemon": "^2.0.22"
   },
   "name": "user_manager",
-  "description": "**Project** # Create a simple user manager (no Angular/React)",
+  "description": "**User manager**",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
