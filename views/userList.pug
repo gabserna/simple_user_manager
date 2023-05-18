@@ -20,7 +20,7 @@ html
                             td= user.email
                             td= user.age
                             td
-                                a(href="/edit/" + userId) = "Edit"
-                                a(href="/delete/" + userId) = "Delete"
+                                button(href="/edit/" + userId) Edit
+                                button(href="/delete/" + userId) Delete
             div(class="btn")
-                a.btn(href="/newUser") +
+                button(href="/newUser") +
