@@ -3,18 +3,25 @@ const fs = require('fs');
 const app = express();
 const uuid = require('uuid');
 
-
-// this are the middlewares
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(express.static('public')); // for serving static assets'
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 app.set('views', './views');
 app.set('view engine', 'pug');
 
-// get data to json file
-let primary_data = fs.readFileSync('users.json');
-let users = JSON.parse(primary_data);
+let users = [];
 
-// routes
+function loadUsers() {
+  const data = fs.readFileSync('users.json', 'utf-8');
+  users = JSON.parse(data).users;
+}
+
+function saveUsers() {
+  const data = JSON.stringify({ users });
+  fs.writeFileSync('users.json', data, 'utf-8');
+}
+
+loadUsers();
+
 app.get('/newUser', (req, res) => {
   res.render('newUser', { user: {} });
 });
@@ -23,7 +30,6 @@ app.get('/', (req, res) => {
   res.redirect('/userList');
 });
 
-// what will goint to happend when user clicks the input button ???????
 app.post('/createUser', (req, res) => {
   const user = {
     userId: uuid.v4(),
@@ -32,50 +38,53 @@ app.post('/createUser', (req, res) => {
     email: req.body.email,
     age: req.body.age
   };
-  users.users.push(user);
-  let data = JSON.stringify(users);
-  fs.writeFileSync('users.json', data);
+  users.push(user);
+  saveUsers();
   res.redirect('/userList');
 });
 
 app.get('/userList', (req, res) => {
-  let primary_data = fs.readFileSync('users.json');
-  let users = JSON.parse(primary_data);
-  res.render('userList', { users: users.users });
+  loadUsers();
+  res.render('userList', { users });
 });
 
 app.get('/editList/:userId', (req, res) => {
-  let primary_data = fs.readFileSync('users.json');
-  let users = JSON.parse(primary_data);
-  let user = users.users.find(user => user.userId == req.params.userId);
+  const userId = req.params.userId;
+  const user = findUserById(userId);
   res.render('editList', { user });
 });
 
 app.post('/editList/:userId', (req, res) => {
-  let primary_data = fs.readFileSync('users.json');
-  let users = JSON.parse(primary_data);
-  let user = users.users.find(user => user.userId == req.params.userId);
-  user.username = req.body.username;
-  user.name = req.body.name;
-  user.email = req.body.email;
-  user.age = req.body.age;
-
-  let data = JSON.stringify(users);
-  fs.writeFileSync('users.json', data);
+  const userId = req.params.userId;
+  const userIndex = findUserIndexById(userId);
+  if (userIndex !== -1) {
+    users[userIndex].username = req.body.username;
+    users[userIndex].name = req.body.name;
+    users[userIndex].email = req.body.email;
+    users[userIndex].age = req.body.age;
+    saveUsers();
+  }
   res.redirect('/userList');
 });
 
 app.get('/delete/:userId', (req, res) => {
-
-  let primary_data = fs.readFileSync('users.json');
-  let users = JSON.parse(primary_data);
-  users.users = users.users.filter(user => user.userId !== req.params.userId);
-  let data = JSON.stringify(users);
-  fs.writeFileSync('users.json', data);
+  const userId = req.params.userId;
+  const userIndex = findUserIndexById(userId);
+  if (userIndex !== -1) {
+    users.splice(userIndex, 1);
+    saveUsers();
+  }
   res.redirect('/userList');
 });
 
-//initialize the server    --change to PORT????--
+function findUserById(userId) {
+  return users.find(user => user.userId === userId);
+}
+
+function findUserIndexById(userId) {
+  return users.findIndex(user => user.userId === userId);
+}
+
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
