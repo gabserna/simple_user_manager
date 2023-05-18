@@ -3,23 +3,39 @@
 body {
     background-color: #000;
     font-family: 'Inconsolata', monospace;
-    color: red;
+    color: #00ff41;
+}
+
+.container {
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    width: auto;
 }
 
 .main {
     color: #00ff41;
     margin: 0 auto;
     border: 2px solid #00ff41;
-    border-radius: 2em;
+    border-radius: 0.5em;
+}
+
+h1 {
+    text-align: center;
 }
 
 table {
     border-collapse: collapse;
 }
-tr:nth-child(even) {
-    background-color: #ffffff;
-    border: 2px;
+tbody, th, tr, td {
+    border: #00ff41 2px solid;
 }
+
+tr:hover {
+    background-color: #dedede;
+    color: #000000;
+}
+
 th {
     text-align: center;
 }
@@ -30,6 +46,7 @@ td {
 button {
     background-color: blue;
     color: aliceblue;
-    border-radius: 1em;
-    width: 5vw;
+    border-radius: 0.25em;
+    width: auto;
+    cursor: pointer;
 }
