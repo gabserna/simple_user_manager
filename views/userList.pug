@@ -1,6 +1,6 @@
 html
     head
-        title= title
+        title User List
         link(rel="stylesheet", href="/styles.css")
     body
         div(class="container")
@@ -20,6 +20,6 @@ html
                             td= user.email
                             td= user.age
                             td
-                                button(href="/edit/" + userId) Edit
-                                button(href="/delete/" + userId) Delete
-                button(href="/newUser") Add
+                                button(type="button", onclick=`window.location.href='/editList/' + '${user.userId}'`) Edit
+                                button(type="button", onclick=`window.location.href='/deleteUser/' + '${user.userId}'`) Delete
+                button(type="button", onclick="window.location.href='/newUser'") Add user

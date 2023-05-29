@@ -22,13 +22,14 @@ function saveUsers() {
 
 loadUsers();
 
+app.get('/', (req, res) => {
+  res.redirect('/newUser');
+});
+
 app.get('/newUser', (req, res) => {
   res.render('newUser', { user: {} });
 });
 
-app.get('/', (req, res) => {
-  res.redirect('/userList');
-});
 
 app.post('/createUser', (req, res) => {
   const user = {
@@ -67,7 +68,7 @@ app.post('/editList/:userId', (req, res) => {
   res.redirect('/userList');
 });
 
-app.get('/delete/:userId', (req, res) => {
+app.get('/deleteUser/:userId', (req, res) => {
   const userId = req.params.userId;
   const userIndex = findUserIndexById(userId);
   if (userIndex !== -1) {
@@ -85,6 +86,6 @@ function findUserIndexById(userId) {
   return users.findIndex(user => user.userId === userId);
 }
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(5000, () => {
+  console.log('Server listening on port 5000');
 });

@@ -7,3 +7,5 @@ npm i express
 npm i fs
 npm i uuid
 npm i pug
+
+pug filename.pug

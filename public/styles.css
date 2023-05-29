@@ -49,7 +49,7 @@ td {
     margin: 0;
 }
 
-button {
+button, #save {
     background-color: #00ff41;
     color: #000;
     border-radius: 0.25em;
